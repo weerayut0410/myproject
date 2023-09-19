@@ -2,9 +2,13 @@ from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from myapp.models import Product
 from django.contrib import messages
+from rest_framework import viewsets, permissions
+from myapp.serializer import ProductSerializer
 
-
-# Create your views here.
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 def delete(request, product_id):
     product = Product.objects.get(id=product_id)
